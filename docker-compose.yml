@@ -1,0 +1,36 @@
+version: "3.9"
+services:
+  avocado-svc:
+    build:
+      context: ./
+      dockerfile: ./cmd/httpserv/Dockerfile
+    ports:
+      - "8885:8080"
+    environment:
+      - ENV_FILE=none
+      - DB_URL=postgres://avocado:!secret@postgres:5432/avocado?sslmode=disable
+      - AMQ_URL=amqp://guest:guest@rmq:5672/
+  avocado-worker:
+    build:
+      context: ./
+      dockerfile: ./cmd/worker/Dockerfile
+    environment:
+      - ENV_FILE=none
+      - DB_URL=postgres://avocado:!secret@postgres:5432/avocado?sslmode=disable
+      - AMQ_URL=amqp://guest:guest@rmq:5672/
+  rmq:
+    image: rabbitmq:3-management
+    container_name: avocado-rmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+  postgres:
+    image: postgres:14
+    volumes:
+      - ./initdb:/docker-entrypoint-initdb.d
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "5432:5432"

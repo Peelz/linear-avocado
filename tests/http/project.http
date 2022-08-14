@@ -1,0 +1,29 @@
+### Create Project
+POST http://localhost:8080/api/v1/projects
+Content-Type: application/json
+
+{
+  "name": "test",
+  "url": "https://github.com/guardrailsio/backend-engineer-challenge"
+}
+
+### Get all Project
+GET http://localhost:8080/api/v1/projects
+Accept: application/json
+
+### Update Project by uuid
+PUT http://localhost:8080/api/v1/projects/9a9a915e-1bf3-11ed-939d-acde48001122
+Content-Type: application/json
+
+{
+  "name": "test 12345",
+  "url": "https://github.com/guardrailsio/backend-engineer-challenge"
+}
+
+### Get Project with Jobs by uuid
+GET http://localhost:8080/api/v1/projects/9a9a915e-1bf3-11ed-939d-acde48001122
+Accept: application/json
+
+### Scan project
+POST http://localhost:8080/api/v1/projects/9a9a915e-1bf3-11ed-939d-acde48001122/scan
+Accept: application/json

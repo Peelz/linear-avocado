@@ -1,0 +1,9 @@
+DB_ADDRESS=localhost
+DB_USERNAME=avocado
+DB_NAME=avocado
+DB_PASSWORD=!secret
+DB_URL=postgres://avocado:!secret@localhost:5432/avocado?sslmode=disable
+
+AMQ_URL=amqp://guest:guest@localhost:5672/
+
+SERVICE_PORT=8080
