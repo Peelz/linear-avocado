@@ -72,3 +72,17 @@ Like a command use for combined source code to cli.
 Integration test saved here example, .http, api testing, postman, etc. 
 
 ## System design
+
+An overall system design, which components are
+- HTTP service (Golang, amqp, gin, bun)
+- Worker service (Golang, amqp, bun)
+- Database (Postgres)
+- Message Broker (RabbitMQ)
+
+![](images/system-diagram.png)
+
+## Improvement
+
+- Separate project to distribution repository
+- Separate database
+- Add more API test to coverage handler, repository function
