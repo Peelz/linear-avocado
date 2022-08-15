@@ -2,11 +2,10 @@ package usecase
 
 import (
 	"context"
-	"fmt"
 	"github.com/monopeelz/linear-avocado/internal/project/entity"
+	"github.com/monopeelz/linear-avocado/internal/scanner/ports"
 	"github.com/monopeelz/linear-avocado/pkg/scanner"
 	"os"
-	"path/filepath"
 )
 
 // ScannerUseCase use for register scanner.Scanner and exec it all.
@@ -20,7 +19,8 @@ type scannerUseCase struct {
 	files    []os.File
 	scanned  []os.File
 	scanners []scanner.Scanner
-	ProjectExplorer
+	ports.ProjectExplorer
+	ports.Downloader
 }
 
 func (s scannerUseCase) AddScanner(scanner scanner.Scanner) {
@@ -37,19 +37,27 @@ func (s scannerUseCase) Rules() []scanner.Rule {
 }
 
 func (s scannerUseCase) Exec(ctx context.Context, i entity.Project) ([]scanner.Finding, error) {
-
-	err := filepath.Walk(".",
-		func(path string, info os.FileInfo, err error) error {
-			if err != nil {
-				return err
-			}
-			fmt.Println(path, info.Size())
-			return nil
-		})
+	findings := make([]scanner.Finding, 0)
+	dest, err := s.Download(i.URL)
+	if err != nil {
+		return nil, err
+	}
+	paths, err := s.Explore(dest)
+	if err != nil {
+		return nil, err
+	}
+	for _, sca := range s.scanners {
+		for _, p := range paths {
+			f, _ := sca.ScanFile(p)
+			findings = append(findings, f...)
+		}
+	}
+	return findings, err
 }
 
-func NewScannerUseCase(e ProjectExplorer) ScannerUseCase {
+func NewScannerUseCase(e ports.ProjectExplorer, d ports.Downloader) ScannerUseCase {
 	return &scannerUseCase{
 		ProjectExplorer: e,
+		Downloader:      d,
 	}
 }
