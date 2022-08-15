@@ -8,7 +8,7 @@ type Project struct {
 	// RepositoryName: string
 	Name string `json:"name,omitempty"`
 	// RepositoryUrl: string
-	URL string `json:"URL,omitempty"`
+	URL string `json:"url,omitempty"`
 	// Jobs in
 	Jobs []Job `json:"jobs,omitempty"`
 }
