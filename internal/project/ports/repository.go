@@ -12,4 +12,5 @@ type ProjectRepository interface {
 	GetAll(ctx context.Context) ([]models.Project, error)
 	GetByID(ctx context.Context, id string) (models.Project, error)
 	GetJobs(ctx context.Context, id string) ([]models.Job, error)
+	CreateJobFromProject(ctx context.Context, project models.Project) (models.Job, error)
 }

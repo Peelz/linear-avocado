@@ -3,28 +3,36 @@ package adapter
 import (
 	"context"
 	"database/sql"
-	"github.com/jackc/pgerrcode"
 	"github.com/monopeelz/linear-avocado/internal/project/models"
 	"github.com/monopeelz/linear-avocado/internal/project/ports"
+	"github.com/monopeelz/linear-avocado/pkg/utils"
 	"github.com/uptrace/bun"
 	"github.com/uptrace/bun/dialect/pgdialect"
-	"github.com/uptrace/bun/driver/pgdriver"
 	"go.uber.org/zap"
 )
-
-func pgError(err error) error {
-	if err, ok := err.(pgdriver.Error); ok && err.IntegrityViolation() {
-		return err
-	} else if err.Field('C') == pgerrcode.InvalidTransactionState {
-		return err
-	}
-	return nil
-}
 
 type projectRepository struct {
 	db     *sql.DB
 	bun    *bun.DB
 	logger *zap.Logger
+}
+
+func (p projectRepository) CreateJobFromProject(ctx context.Context, i models.Project) (models.Job, error) {
+	var err error
+	job := models.Job{
+		ProjectID: i.ID,
+		Status:    models.Queued,
+	}
+	_, err = p.bun.NewInsert().
+		Model(&job).
+		Column("project_id", "status").
+		Returning("uuid").
+		Exec(ctx, &job)
+	if err != nil {
+		p.logger.Error("", zap.Error(err))
+		return models.Job{}, err
+	}
+	return job, nil
 }
 
 func (p projectRepository) GetJobs(ctx context.Context, id string) ([]models.Job, error) {
@@ -41,10 +49,10 @@ func (p projectRepository) Create(ctx context.Context, i models.Project) (models
 	_, err := p.bun.NewInsert().Model(&i).
 		Returning("id, uuid, name, url").
 		Exec(ctx, &proj)
-	if pgError(err) != nil {
+	if utils.PgError(err) != nil {
 		p.logger.Error("", zap.Error(err))
 	}
-	return proj, pgError(err)
+	return proj, utils.PgError(err)
 }
 
 func (p projectRepository) Update(ctx context.Context, i models.UpdateProject) (models.Project, error) {
