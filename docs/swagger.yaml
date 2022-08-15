@@ -12,12 +12,6 @@ definitions:
         type: string
       project:
         $ref: '#/definitions/entity.Project'
-      projectID:
-        description: 'ProjectID: Project ID use for RDBMS'
-        type: integer
-      projectUUID:
-        description: 'ProjectUUID:  Global ID use for expose public'
-        type: string
       startedAt:
         description: 'StartedAt: timestamp'
         type: string
@@ -81,7 +75,7 @@ paths:
       summary: create project
       tags:
       - projects
-  /projects/:id:
+  /projects/{id}:
     delete:
       consumes:
       - application/json
@@ -91,7 +85,7 @@ paths:
         in: path
         name: id
         required: true
-        type: integer
+        type: string
       produces:
       - application/json
       responses:
@@ -111,7 +105,7 @@ paths:
         in: path
         name: id
         required: true
-        type: integer
+        type: string
       produces:
       - application/json
       responses:
@@ -131,7 +125,7 @@ paths:
         in: path
         name: id
         required: true
-        type: integer
+        type: string
       produces:
       - application/json
       responses:
@@ -142,7 +136,7 @@ paths:
       summary: update project
       tags:
       - projects
-  /projects/:id/scan:
+  /projects/{id}/scan:
     post:
       consumes:
       - application/json
@@ -152,7 +146,7 @@ paths:
         in: path
         name: id
         required: true
-        type: integer
+        type: string
       produces:
       - application/json
       responses:

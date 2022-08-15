@@ -63,7 +63,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/projects/:id": {
+        "/projects/{id}": {
             "get": {
                 "description": "get entity.Project by uuid",
                 "consumes": [
@@ -78,7 +78,7 @@ const docTemplate = `{
                 "summary": "get project by uuid",
                 "parameters": [
                     {
-                        "type": "integer",
+                        "type": "string",
                         "description": "uuid of project",
                         "name": "id",
                         "in": "path",
@@ -108,7 +108,7 @@ const docTemplate = `{
                 "summary": "update project",
                 "parameters": [
                     {
-                        "type": "integer",
+                        "type": "string",
                         "description": "uuid of project",
                         "name": "id",
                         "in": "path",
@@ -138,7 +138,7 @@ const docTemplate = `{
                 "summary": "delete project from uuid",
                 "parameters": [
                     {
-                        "type": "integer",
+                        "type": "string",
                         "description": "uuid of project",
                         "name": "id",
                         "in": "path",
@@ -155,7 +155,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/projects/:id/scan": {
+        "/projects/{id}/scan": {
             "post": {
                 "description": "scan project and initial job",
                 "consumes": [
@@ -170,7 +170,7 @@ const docTemplate = `{
                 "summary": "scan project from uuid",
                 "parameters": [
                     {
-                        "type": "integer",
+                        "type": "string",
                         "description": "uuid of project",
                         "name": "id",
                         "in": "path",
@@ -206,14 +206,6 @@ const docTemplate = `{
                 },
                 "project": {
                     "$ref": "#/definitions/entity.Project"
-                },
-                "projectID": {
-                    "description": "ProjectID: Project ID use for RDBMS",
-                    "type": "integer"
-                },
-                "projectUUID": {
-                    "description": "ProjectUUID:  Global ID use for expose public",
-                    "type": "string"
                 },
                 "startedAt": {
                     "description": "StartedAt: timestamp",
