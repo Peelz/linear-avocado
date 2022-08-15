@@ -1,7 +1,6 @@
 package adapter
 
 import (
-	"fmt"
 	"github.com/monopeelz/linear-avocado/internal/scanner/ports"
 	"os"
 	"path/filepath"
@@ -18,7 +17,7 @@ func (p projectExplore) Explore(root string) ([]string, error) {
 				return err
 			}
 			if !info.IsDir() {
-				fmt.Println(path, info.Size())
+				// fmt.Println(path, info.Size())
 				files = append(files, path)
 			}
 			return nil

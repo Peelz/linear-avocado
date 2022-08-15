@@ -19,11 +19,10 @@ func (h Handler) ScanProject(ctx context.Context, b []byte) {
 	if err := json.Unmarshal(b, proj); err != nil {
 		fmt.Println(err)
 	}
-	finding, err := h.u.Exec(ctx, *proj)
+	_, err := h.u.Exec(ctx, *proj)
 	if err != nil {
 		fmt.Println(err)
 	}
-	log.Printf("Success %v", finding)
 }
 
 func NewHandler(u usecase.ScannerUseCase) *Handler {
