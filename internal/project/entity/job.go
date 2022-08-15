@@ -4,17 +4,13 @@ import "time"
 
 type Job struct {
 	// UUID: Global ID
-	UUID string
-	// ProjectID: Project ID use for RDBMS
-	ProjectID uint
-	// ProjectUUID:  Global ID use for expose public
-	ProjectUUID string
+	UUID string `json:"uuid"`
 	// CreatedAt: timestamp
-	CreatedAt *time.Time
+	CreatedAt *time.Time `json:"createdAt"`
 	// StartedAt: timestamp
-	StartedAt *time.Time
+	StartedAt *time.Time `json:"startedAt"`
 	// FinishedAt: timestamp
-	FinishedAt *time.Time
+	FinishedAt *time.Time `json:"finishedAt"`
 
 	Status string `json:"status,omitempty"`
 
