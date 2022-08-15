@@ -17,8 +17,8 @@ func (p projectExplore) Explore(root string) ([]string, error) {
 			if err != nil {
 				return err
 			}
-			fmt.Println(path, info.Size())
 			if !info.IsDir() {
+				fmt.Println(path, info.Size())
 				files = append(files, path)
 			}
 			return nil

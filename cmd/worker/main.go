@@ -1,11 +1,14 @@
 package main
 
 import (
-	"context"
+	"database/sql"
 	"github.com/caarlos0/env"
 	"github.com/joho/godotenv"
 	"github.com/monopeelz/linear-avocado/internal/pkg/message"
+	"github.com/monopeelz/linear-avocado/internal/scanner"
 	amqp "github.com/rabbitmq/amqp091-go"
+	"github.com/uptrace/bun/driver/pgdriver"
+	"go.uber.org/zap"
 	"log"
 	"os"
 )
@@ -38,10 +41,15 @@ func main() {
 	failOnError(err, "Failed to open a channel")
 	defer ch.Close()
 
+	// Logger
+	logger, _ := zap.NewDevelopment()
+
+	// DB
+	dbConn := sql.OpenDB(pgdriver.NewConnector(pgdriver.WithDSN(cfg.DbUrl)))
+	h := scanner.Initial(dbConn, logger)
+
 	sb := message.NewRabbitMqSubscriber(ch)
-	err = sb.Subscribe("scan-project", func(ctx context.Context, b []byte) {
-		log.Printf("Received a message: %s", b)
-	})
+	err = sb.Subscribe("scan-project", h.ScanProject)
 	if err != nil {
 		failOnError(err, "Failed to subscribe")
 	}

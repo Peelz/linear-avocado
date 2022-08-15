@@ -1,6 +1,7 @@
 package adapter
 
 import (
+	"fmt"
 	"github.com/monopeelz/linear-avocado/pkg/scanner"
 	"os"
 )
@@ -30,6 +31,7 @@ func (c simpleScanner) ScanFile(path string) ([]scanner.Finding, error) {
 	if _, err := f.Read(rb); err != nil {
 		return res, err
 	}
+	fmt.Println(string(rb))
 	return c.scanByte(rb)
 }
 
