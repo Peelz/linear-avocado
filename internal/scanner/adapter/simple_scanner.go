@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/monopeelz/linear-avocado/pkg/scanner"
 	"os"
+	"strings"
 )
 
 var (
@@ -22,17 +23,11 @@ func (c simpleScanner) Rules() []scanner.Rule {
 }
 
 func (c simpleScanner) ScanFile(path string) ([]scanner.Finding, error) {
-	var res []scanner.Finding
-	f, err := os.OpenFile(path, os.O_RDONLY, os.ModePerm)
+	content, err := os.ReadFile(path)
 	if err != nil {
-		return res, err
+		return nil, err
 	}
-	rb := make([]byte, 0)
-	if _, err := f.Read(rb); err != nil {
-		return res, err
-	}
-	fmt.Println(string(rb))
-	return c.scanByte(rb)
+	return c.scanByte(content)
 }
 
 func (c simpleScanner) scanByte(b []byte) ([]scanner.Finding, error) {
@@ -63,15 +58,16 @@ func (c simpleScanner) scanByte(b []byte) ([]scanner.Finding, error) {
 		}
 
 	}
+	fmt.Println("detections", detections)
 	return detections, nil
 }
 
 func (c simpleScanner) scanSecret(i []byte) *scanner.Rule {
 	word := string(i)
-	switch word {
-	case "private_key":
+	if strings.Contains(word, "private_key") {
+		fmt.Println("private_key")
 		return PrivateKeyDetect
-	case "public_key":
+	} else if strings.Contains(word, "public_key") {
 		return PublicKeyDetect
 	}
 	return nil
