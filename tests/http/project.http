@@ -12,7 +12,7 @@ GET http://localhost:8080/api/v1/projects
 Accept: application/json
 
 ### Update Project by uuid
-PUT http://localhost:8080/api/v1/projects/9a9a915e-1bf3-11ed-939d-acde48001122
+PUT http://localhost:8080/api/v1/projects/52786323-d7d7-4623-8667-a1879aab0039
 Content-Type: application/json
 
 {
@@ -21,9 +21,9 @@ Content-Type: application/json
 }
 
 ### Get Project with Jobs by uuid
-GET http://localhost:8080/api/v1/projects/9a9a915e-1bf3-11ed-939d-acde48001122
+GET http://localhost:8080/api/v1/projects/52786323-d7d7-4623-8667-a1879aab0039
 Accept: application/json
 
 ### Scan project
-POST http://localhost:8080/api/v1/projects/9a9a915e-1bf3-11ed-939d-acde48001122/scan
+POST http://localhost:8080/api/v1/projects/52786323-d7d7-4623-8667-a1879aab0039/scan
 Accept: application/json
