@@ -35,7 +35,6 @@ air -c .air.worker.toml
 Contain business logic may use for solve functional requirement.
 
 - project – Project management
-- job – To tracking any job from scan project request.
 - scanner – To tracking any job from scan project request.
 - pkg – Share package use for reduce duplicate code
 
