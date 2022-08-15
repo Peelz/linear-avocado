@@ -96,5 +96,6 @@ An overall system design, which components are
 ## Improvement
 
 - Separate project to distribution repository
-- Separate database
 - Add more API test to coverage handler, repository function
+- Add more unittest for business logic
+- Friendly error handling
