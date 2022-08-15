@@ -12,8 +12,8 @@ This project still work in progress.
 - [X] CRUD project API
 - [X] Scanning project
 - [X] Business logic testing
-- [ ] Job detail API
-- [ ] API Document (swagger)
+- [X] Job detail API
+- [X] API Document (swagger)
 
 ## Start Project in local
 
@@ -33,6 +33,12 @@ go run cmd/worker/main.go
 # or using air (https://github.com/cosmtrek/air) for hot reload
 air -c .air.http.toml
 air -c .air.worker.toml
+```
+
+## API Document
+```shell
+# replace host name and port
+http://localhost:8080/swagger/index.html#/
 ```
 
 ## Project structure

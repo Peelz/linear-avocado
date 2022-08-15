@@ -1,0 +1,166 @@
+definitions:
+  entity.Job:
+    properties:
+      createdAt:
+        description: 'CreatedAt: timestamp'
+        type: string
+      detail:
+        additionalProperties: true
+        type: object
+      finishedAt:
+        description: 'FinishedAt: timestamp'
+        type: string
+      project:
+        $ref: '#/definitions/entity.Project'
+      projectID:
+        description: 'ProjectID: Project ID use for RDBMS'
+        type: integer
+      projectUUID:
+        description: 'ProjectUUID:  Global ID use for expose public'
+        type: string
+      startedAt:
+        description: 'StartedAt: timestamp'
+        type: string
+      status:
+        type: string
+      uuid:
+        description: 'UUID: Global ID'
+        type: string
+    type: object
+  entity.Project:
+    properties:
+      id:
+        description: 'ID: any type of unique id'
+        type: integer
+      jobs:
+        description: Jobs in
+        items:
+          $ref: '#/definitions/entity.Job'
+        type: array
+      name:
+        description: 'RepositoryName: string'
+        type: string
+      url:
+        description: 'RepositoryUrl: string'
+        type: string
+      uuid:
+        description: 'UUID: any type of unique id'
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /projects:
+    get:
+      consumes:
+      - application/json
+      description: list entity.Project
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entity.Project'
+            type: array
+      summary: list projects
+      tags:
+      - projects
+    post:
+      consumes:
+      - application/json
+      description: get entity.Project by uuid
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: create project
+      tags:
+      - projects
+  /projects/:id:
+    delete:
+      consumes:
+      - application/json
+      description: get entity.Project by uuid
+      parameters:
+      - description: uuid of project
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: delete project from uuid
+      tags:
+      - projects
+    get:
+      consumes:
+      - application/json
+      description: get entity.Project by uuid
+      parameters:
+      - description: uuid of project
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.Project'
+      summary: get project by uuid
+      tags:
+      - projects
+    put:
+      consumes:
+      - application/json
+      description: get entity.Project by uuid
+      parameters:
+      - description: uuid of project
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: update project
+      tags:
+      - projects
+  /projects/:id/scan:
+    post:
+      consumes:
+      - application/json
+      description: scan project and initial job
+      parameters:
+      - description: uuid of project
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: scan project from uuid
+      tags:
+      - projects
+swagger: "2.0"

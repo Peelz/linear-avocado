@@ -6,8 +6,11 @@ import (
 	"github.com/caarlos0/env"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+	"github.com/monopeelz/linear-avocado/docs"
 	"github.com/monopeelz/linear-avocado/internal/project"
 	amqp "github.com/rabbitmq/amqp091-go"
+	swaggerfiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/uptrace/bun/driver/pgdriver"
 	"go.uber.org/zap"
 	"log"
@@ -31,6 +34,10 @@ func main() {
 	env.Parse(&cfg)
 	logger, _ := zap.NewDevelopment()
 	e := gin.Default()
+	// Swagger UI
+	docs.SwaggerInfo.BasePath = "/api/v1"
+	e.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
+
 	// DB
 	dbConn := sql.OpenDB(pgdriver.NewConnector(pgdriver.WithDSN(cfg.DbUrl)))
 	// AMQ

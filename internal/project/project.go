@@ -9,6 +9,8 @@ import (
 	"go.uber.org/zap"
 )
 
+// Initial godoc
+// @BasePath /api/v1
 func Initial(e *gin.Engine, db *sql.DB, amqpConn *amqp.Connection, logger *zap.Logger) {
 	h := adapter.NewHandler(usecase.NewProjectUseCase(
 		adapter.NewProjectRepository(db, logger),
