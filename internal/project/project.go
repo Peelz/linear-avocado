@@ -13,6 +13,7 @@ func Initial(e *gin.Engine, db *sql.DB, amqpConn *amqp.Connection, logger *zap.L
 	h := adapter.NewHandler(usecase.NewProjectUseCase(
 		adapter.NewProjectRepository(db, logger),
 		adapter.NewMessageBroker(amqpConn),
+		logger,
 	))
 	adapter.RegisterRoute(e, h)
 }
