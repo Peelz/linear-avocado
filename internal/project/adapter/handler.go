@@ -82,12 +82,12 @@ func (h Handler) Delete(ctx *gin.Context) {
 
 func (h Handler) Scan(ctx *gin.Context) {
 	id := ctx.Param("id")
-	err := h.uc.Scan(ctx.Request.Context(), id)
+	res, err := h.uc.Scan(ctx.Request.Context(), id)
 	if err != nil {
 		utils.GinErrorWrapper(ctx, err, 400)
 		return
 	}
-	utils.GinResponseWrapper(ctx, nil, 200)
+	utils.GinResponseWrapper(ctx, res, 200)
 }
 
 func NewHandler(uc usecase.ProjectUseCase) *Handler {
