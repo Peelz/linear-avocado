@@ -3,9 +3,11 @@ package main
 import (
 	"context"
 	"github.com/caarlos0/env"
+	"github.com/joho/godotenv"
 	"github.com/monopeelz/linear-avocado/internal/pkg/message"
 	amqp "github.com/rabbitmq/amqp091-go"
 	"log"
+	"os"
 )
 
 func failOnError(err error, msg string) {
@@ -20,6 +22,11 @@ type Config struct {
 }
 
 func main() {
+	// Load .env file
+	if os.Getenv("ENV_FILE") != "none" {
+		godotenv.Load()
+	}
+
 	cfg := Config{}
 	env.Parse(&cfg)
 
