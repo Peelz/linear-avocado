@@ -1,7 +1,6 @@
 package adapter
 
 import (
-	"fmt"
 	"github.com/monopeelz/linear-avocado/pkg/scanner"
 	"os"
 	"strings"
@@ -58,14 +57,12 @@ func (c simpleScanner) scanByte(b []byte) ([]scanner.Finding, error) {
 		}
 
 	}
-	fmt.Println("detections", detections)
 	return detections, nil
 }
 
 func (c simpleScanner) scanSecret(i []byte) *scanner.Rule {
 	word := string(i)
 	if strings.Contains(word, "private_key") {
-		fmt.Println("private_key")
 		return PrivateKeyDetect
 	} else if strings.Contains(word, "public_key") {
 		return PublicKeyDetect

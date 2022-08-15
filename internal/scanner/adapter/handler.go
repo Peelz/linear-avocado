@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/monopeelz/linear-avocado/internal/scanner/entity"
+	"github.com/monopeelz/linear-avocado/internal/scanner/models"
 	"github.com/monopeelz/linear-avocado/internal/scanner/usecase"
 	"log"
 )
@@ -15,11 +15,11 @@ type Handler struct {
 
 func (h Handler) ScanProject(ctx context.Context, b []byte) {
 	log.Printf("Received a message: %s", b)
-	proj := new(entity.Project)
-	if err := json.Unmarshal(b, proj); err != nil {
+	job := new(models.Job)
+	if err := json.Unmarshal(b, job); err != nil {
 		fmt.Println(err)
 	}
-	_, err := h.u.Exec(ctx, *proj)
+	_, err := h.u.Exec(ctx, *job)
 	if err != nil {
 		fmt.Println(err)
 	}

@@ -1,4 +1,4 @@
-package entity
+package models
 
 type ScanResult struct {
 	Type     string   `json:"type"`
