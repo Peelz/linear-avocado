@@ -57,7 +57,7 @@ func (h Handler) Retrieve(ctx *gin.Context) {
 // @Tags projects
 // @Accept json
 // @Produce json
-// @Success 200 {string} entity.Project
+// @Success 200 {object} entity.Project
 // @Router /projects [post]
 func (h Handler) Create(ctx *gin.Context) {
 	req := new(CreateProjectRequest)
@@ -85,7 +85,7 @@ func (h Handler) Create(ctx *gin.Context) {
 // @Tags projects
 // @Accept json
 // @Produce json
-// @Success 200 {string} entity.Project
+// @Success 200 {object} entity.Project
 // @Router /projects/{id} [put]
 func (h Handler) Update(ctx *gin.Context) {
 	req := new(UpdateProjectRequest)
@@ -116,7 +116,7 @@ func (h Handler) Update(ctx *gin.Context) {
 // @Tags projects
 // @Accept json
 // @Produce json
-// @Success 200 {string} entity.Project
+// @Success 200 {object} entity.Project
 // @Router /projects/{id} [delete]
 func (h Handler) Delete(ctx *gin.Context) {
 	id := ctx.Param("id")
@@ -136,7 +136,7 @@ func (h Handler) Delete(ctx *gin.Context) {
 // @Tags projects
 // @Accept json
 // @Produce json
-// @Success 200 {string} entity.Job
+// @Success 200 {object} entity.Job
 // @Router /projects/{id}/scan [post]
 func (h Handler) Scan(ctx *gin.Context) {
 	id := ctx.Param("id")
