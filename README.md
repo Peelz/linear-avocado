@@ -8,6 +8,7 @@ avocado ! ![Avocado](images/avocado.png).
 This project still work in progress.
 
 ## Features
+- [X] Containerized
 - [X] CRUD project API
 - [X] Scanning project
 - [X] Business logic testing
