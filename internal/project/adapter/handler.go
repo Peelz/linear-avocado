@@ -31,7 +31,7 @@ func (h Handler) List(ctx *gin.Context) {
 }
 
 // Retrieve godoc
-// @Param id path int true "uuid of project"
+// @Param id path string true "uuid of project"
 // @Summary get project by uuid
 // @Schemes
 // @Description get entity.Project by uuid
@@ -39,7 +39,7 @@ func (h Handler) List(ctx *gin.Context) {
 // @Accept json
 // @Produce json
 // @Success 200 {object} entity.Project
-// @Router /projects/:id [get]
+// @Router /projects/{id} [get]
 func (h Handler) Retrieve(ctx *gin.Context) {
 	id := ctx.Param("id")
 	res, err := h.uc.Get(ctx.Request.Context(), id)
@@ -78,7 +78,7 @@ func (h Handler) Create(ctx *gin.Context) {
 }
 
 // Update godoc
-// @Param id path int true "uuid of project"
+// @Param id path string true "uuid of project"
 // @Summary update project
 // @Schemes
 // @Description get entity.Project by uuid
@@ -86,7 +86,7 @@ func (h Handler) Create(ctx *gin.Context) {
 // @Accept json
 // @Produce json
 // @Success 200 {string} entity.Project
-// @Router /projects/:id [put]
+// @Router /projects/{id} [put]
 func (h Handler) Update(ctx *gin.Context) {
 	req := new(UpdateProjectRequest)
 	if err := ctx.Bind(req); err != nil {
@@ -109,7 +109,7 @@ func (h Handler) Update(ctx *gin.Context) {
 }
 
 // Delete godoc
-// @Param id path int true "uuid of project"
+// @Param id path string true "uuid of project"
 // @Summary delete project from uuid
 // @Schemes
 // @Description get entity.Project by uuid
@@ -117,7 +117,7 @@ func (h Handler) Update(ctx *gin.Context) {
 // @Accept json
 // @Produce json
 // @Success 200 {string} entity.Project
-// @Router /projects/:id [delete]
+// @Router /projects/{id} [delete]
 func (h Handler) Delete(ctx *gin.Context) {
 	id := ctx.Param("id")
 	err := h.uc.Delete(ctx.Request.Context(), id)
@@ -129,7 +129,7 @@ func (h Handler) Delete(ctx *gin.Context) {
 }
 
 // Scan godoc
-// @Param id path int true "uuid of project"
+// @Param id path string true "uuid of project"
 // @Summary scan project from uuid
 // @Schemes
 // @Description scan project and initial job
@@ -137,7 +137,7 @@ func (h Handler) Delete(ctx *gin.Context) {
 // @Accept json
 // @Produce json
 // @Success 200 {string} entity.Job
-// @Router /projects/:id/scan [post]
+// @Router /projects/{id}/scan [post]
 func (h Handler) Scan(ctx *gin.Context) {
 	id := ctx.Param("id")
 	res, err := h.uc.Scan(ctx.Request.Context(), id)

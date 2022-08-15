@@ -6,7 +6,7 @@ services:
       context: ./
       dockerfile: ./cmd/httpserv/Dockerfile
     ports:
-      - "8885:8080"
+      - "8080:8080"
     environment:
       - ENV_FILE=none
       - DB_URL=postgres://avocado:!secret@postgres:5432/avocado?sslmode=disable
