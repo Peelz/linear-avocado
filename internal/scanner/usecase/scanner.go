@@ -2,7 +2,6 @@ package usecase
 
 import (
 	"context"
-	"fmt"
 	"github.com/monopeelz/linear-avocado/internal/scanner/entity"
 	"github.com/monopeelz/linear-avocado/internal/scanner/ports"
 	"github.com/monopeelz/linear-avocado/pkg/scanner"
@@ -33,7 +32,6 @@ func (s *scannerUseCase) Files() []string {
 
 func (s *scannerUseCase) AddScanner(scanner scanner.Scanner) {
 	s.scanners = append(s.scanners, scanner)
-	fmt.Println("add new", s.scanners)
 }
 
 func (s *scannerUseCase) Scanners() []scanner.Scanner {
@@ -60,16 +58,14 @@ func (s *scannerUseCase) Exec(ctx context.Context, i entity.Project) ([]scanner.
 		s.logger.Error("", zap.Error(err))
 		return nil, err
 	}
-	fmt.Println("p", paths)
-	fmt.Println("p", s.scanners)
 	for _, sca := range s.scanners {
 		for _, p := range paths {
-			s.logger.Debug("Scanning", zap.String("path", p))
 			f, err := sca.ScanFile(p)
 			if err != nil {
 				s.logger.Error("", zap.Error(err))
 			}
-			if findings != nil && len(findings) > 0 {
+			if f != nil && len(f) > 0 {
+				s.logger.Debug("Found", zap.Any("count", len(f)))
 				findings = append(findings, f...)
 			}
 		}
