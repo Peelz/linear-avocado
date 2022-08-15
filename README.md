@@ -9,10 +9,10 @@ This project still work in progress.
 
 ## Features
 - [X] CRUD project API
-- [ ] Job detail API
-- [ ] API Document (swagger)
 - [X] Scanning project
 - [X] Business logic testing
+- [ ] Job detail API
+- [ ] API Document (swagger)
 
 ## Start Project in local
 
