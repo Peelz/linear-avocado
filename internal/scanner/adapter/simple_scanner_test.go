@@ -17,18 +17,58 @@ func Test_codeScanner_ScanByte(t *testing.T) {
 		assertErr assert.ErrorAssertionFunc
 	}{
 		{
-			name: "",
+			name: "test PublicKeyDetect",
 			args: args{
-				b: []byte("public test"),
+				b: []byte("1st line\nnewline before public_key tailing\nfoo bar\n"),
 			},
 			want: []scanner.Finding{
 				{
-					Type:     "swd",
-					RuleId:   "G0001",
+					Type:     PublicKeyDetect.Type,
+					RuleId:   PublicKeyDetect.ID,
 					Location: scanner.Location{},
 					Metadata: scanner.Metadata{
-						Description: "Sensitive keyword 'public', 'private' detected",
-						Severity:    "LOW",
+						Description: PublicKeyDetect.Description,
+						Severity:    PublicKeyDetect.Severity,
+					},
+				},
+			},
+			assertErr: func(t assert.TestingT, err error, i ...interface{}) bool {
+				return assert.NoError(t, err)
+			},
+		},
+		{
+			name: "test PrivateKeyDetect",
+			args: args{
+				b: []byte("1st line\nnewline before private_key tailing\nfoo bar\n"),
+			},
+			want: []scanner.Finding{
+				{
+					Type:     PrivateKeyDetect.Type,
+					RuleId:   PrivateKeyDetect.ID,
+					Location: scanner.Location{},
+					Metadata: scanner.Metadata{
+						Description: PrivateKeyDetect.Description,
+						Severity:    PrivateKeyDetect.Severity,
+					},
+				},
+			},
+			assertErr: func(t assert.TestingT, err error, i ...interface{}) bool {
+				return assert.NoError(t, err)
+			},
+		},
+		{
+			name: "test PrivateKeyDetect substr",
+			args: args{
+				b: []byte("1st line\nnewline before headingprivate_keytailing\nfoo bar\n"),
+			},
+			want: []scanner.Finding{
+				{
+					Type:     PrivateKeyDetect.Type,
+					RuleId:   PrivateKeyDetect.ID,
+					Location: scanner.Location{},
+					Metadata: scanner.Metadata{
+						Description: PrivateKeyDetect.Description,
+						Severity:    PrivateKeyDetect.Severity,
 					},
 				},
 			},
