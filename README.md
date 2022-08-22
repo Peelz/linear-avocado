@@ -3,10 +3,6 @@
 Inspiration from ![Onion](images/onion.png) onion architecture (Clean architecture) as
 avocado ! ![Avocado](images/avocado.png).
 
-## ⚠️ In progress ⚠️
-
-This project still work in progress.
-
 ## Features
 - [X] Containerized
 - [X] CRUD project API
